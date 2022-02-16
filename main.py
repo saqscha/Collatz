@@ -14,35 +14,53 @@ class App():
         self.inp = self.input_entry.get()
         self.inp_int = int(self.inp)
 
-        self.output_right.insert(0.1, '\teven')
-        self.output_left.insert(END, '\todd')
+        self.output_right.insert(0.1, '\todd')
+        self.output_left.insert(END, '\teven')
 
         # Anfangs-Zahl einfügen
         if self.inp_int % 2:
+            self.output_right.insert(END, '\n-> ')
+            self.output_right.insert(END, int(self.inp_int))
+            self.output_left.insert(END, '\n-> ')
+            
+        else:
             self.output_left.insert(END, '\n-> ')
             self.output_left.insert(END, int(self.inp_int))
             self.output_right.insert(END, '\n-> ')
 
-        else:
-            self.output_right.insert(END, '\n-> ')
-            self.output_right.insert(END, int(self.inp_int))
-            self.output_left.insert(END, '\n-> ')
 
         # 'rechnen'
         while self.inp_int > 1:
             #gerade / even
             if self.inp_int % 2:
                 self.inp_int = self.inp_int*3+1
-                self.output_right.insert(END, '\n-> ')
-                self.output_right.insert(END, int(self.inp_int))
-                self.output_left.insert(END, '\n-> ')
+                if self.inp_int % 2:
+                    self.output_right.insert(END, '\n-> ')
+                    self.output_right.insert(END, int(self.inp_int))
+                    self.output_left.insert(END, '\n-> ')
+                else:
+                    self.output_left.insert(END, '\n-> ')
+                    self.output_left.insert(END, int(self.inp_int))
+                    self.output_right.insert(END, '\n-> ')
+
+            
 
             # ungerade / odd
             else:
                 self.inp_int = self.inp_int/2
-                self.output_left.insert(END, '\n-> ')
-                self.output_left.insert(END, int(self.inp_int))
-                self.output_right.insert(END, '\n-> ')
+                if self.inp_int % 2:
+                    self.output_right.insert(END, '\n-> ')
+                    self.output_right.insert(END, int(self.inp_int))
+                    self.output_left.insert(END, '\n-> ')
+                else:
+                    self.output_left.insert(END, '\n-> ')
+                    self.output_left.insert(END, int(self.inp_int))
+                    self.output_right.insert(END, '\n-> ')
+
+
+
+
+                
     
         self.input_entry.delete(0, END)
         self.output_left.config(state='disabled')
@@ -90,6 +108,9 @@ class App():
         # Configure Scrollbar
         self.scrollb_left.config(command=self.output_left.yview)
         self.scrollb_right.config(command=self.output_right.yview)
+        self.output_left.config(yscrollcommand=self.scrollb_left.set)
+        self.output_right.config(yscrollcommand=self.scrollb_right.set)
+
 
 
 root = Tk()
